@@ -13,19 +13,22 @@ function Dashboard() {
   const { user } = useSelector((state) => state.auth);
   const { goals, isLoading, isError, message } = useSelector(
     (state) => state.goals
-  )
+  );
 
   useEffect(() => {
-    if (isError) console.log(message);
+    if (isError) {
+      console.log(message);
+    }
     if (!user) {
       navigate("/login");
+    } else {
+      dispatch(getGoals());
     }
-    dispatch(getGoals());
 
     return () => {
       dispatch(reset());
     };
-  }, [user, navigate, isError, message, dispatch])
+  }, [user, navigate, isError, message, dispatch]);
 
   if (isLoading) {
     return <Spinner />;
